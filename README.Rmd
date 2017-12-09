@@ -1,0 +1,123 @@
+---
+title: "一些R语言学习的经验分享"
+author: "muzhi"
+date: "2017/12/9"
+output:
+  html_document:
+    
+    df_print: paged
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R 语言简介
+### R 语言有什么用呢？
+  R 语言是一个非常适合对编程没有基础的初学者学习的语言。她不仅仅是一个统计分析软件，它还可以自由编程。她是免费，开源的软件。由于她有大量使用者，爱好者，贡献者以及R语言社区，所以有许多免费的packages可以使用。这些packages大都有C，C++编写，我们只要用很简单的编程方式就可以调用进行很复杂，高效的算法。
+ 
+  R语言可以进行统计分析，数据挖掘，机器学习，开发可视化，形成优秀的分析报告等等。R的优势在于：
+  
+  - 有完善的开源社区，大量的Geek 
+  - 简洁的语法，对于初学者非常友好
+  - 非常非常好的数据可视化，还可以制作交互的数据产品
+  - 是一个站在建模角度的语言，不需要在意太多后台。数据结构等等
+
+### 如何安装 R呢
+
+- 安装 [R GUi](https://www.r-project.org)
+    - 在官网通过很简单的操作就可以安装最新版本的
+    - 注意选择适合你操作系统的最新版本
+    -  建议安装时选择默认选项
+- 安装 [RStudio](https://www.rstudio.com)
+    + 安装RGUi之后建议包安装RStudio，这是一个R的很长好的IDE平台。
+    + 请选择RGUi的对应对应版本
+  
+这样你就已经搭建一个一个***非常完美***的R语言开发使用平台了
+
+## R语言学习
+### 先跑起来吧
+R语言的可视化能力很强，图很漂亮。这里对R语言自带数据集mtcars进行探索
+
+ - 查看数据集
+```{r}
+#查看数据集的一个summary报告
+summary(mtcars)
+#查看前n的数据
+head(mtcars, n = 5)
+#数据集类型
+class(mtcars)
+#数据的维度
+dim(mtcars)
+#每个列变量的名称
+colnames(mtcars)
+```
+ - 利用`ggplot2`可视化
+```{r eval=FALSE}
+#
+install.packages('ggplot2')
+``` 
+```{r}
+#
+library(ggplot2)
+
+``` 
+```{r}
+#查看mpg取值分布
+ggplot(data = mtcars) + geom_histogram(aes(mpg))
+#利用相型图查看 vs 两个取值的disp分布
+ggplot(data = mtcars) + geom_boxplot(aes(x =factor(vs), y = mtcars$disp)) + 
+  geom_hline( yintercept = mean(mtcars$disp) )
+
+
+```
+
+ - 用 `corrplot` 包 查看 变量之间的相关性
+```{r eval=FALSE}
+install.packages('corrplot')
+```
+```{r}
+library(corrplot)
+
+M <- cor(mtcars)
+corrplot(M)
+
+
+```
+
+## 总结
+
+### Tips
+  - 现在你已经知道如何安装，并加载packages。一般当你遇到问题，在budai或者google上搜索相关的问题一般就可得到答案。请记住，当你要实现一个比较复杂的功能时，首先先去查查有没有相关的packages，博客等等，再去着手解决。初学者一般不要造轮子。
+  - 推荐你去看《R语言实战》这本书，了解R语言的基本语法，基本功能。不用完全读懂，把它当成一个手册，需要时翻翻就好。
+  - 当你了解基本语法之后，找一些练手的项目。比如对数据挖掘感兴趣可以在[kaggle](kaggle.com)上参加比赛学习。
+  - 学会查看help文档 `?corrplot`
+  - 学会科学上网，建议把R的默认下载路径更改为国内，否则下载packages的速度会很慢。
+  
+### R语言学习路径
+ 
+#### 入门
+  - 学习《R语言实战》了解一些简单算法使用R进行来练手
+  - 在[coursera](https://www.coursera.org/specializations/jhu-data-science)上学习 霍普金斯大学的 **Data Science**课程
+    
+#### 进阶
+  - 想做自然语言处理的同学可以看看《基于R语言自动数据收集》~~较难~~ 讲解如何制作R语言爬虫，如何处理文本数据
+  - 对机器学习需要，可以看看《统计学习导论基于R应用》[英文版免费](http://www-bcf.usc.edu/~gareth/ISL/)这是一本非常棒的书，如果以后机器学习的话，一定要看。
+
+#### 更进一步 ~~放弃~~
+  - R语言高级编程指南
+  - R的极客理想系列
+  - 看看别人的学习建议[该如何学习 R 语言？](https://www.zhihu.com/question/21654166)
+  [R语言学习由浅入深路线图](http://blog.csdn.net/lgdblue/article/details/42678233)
+  
+### 推荐 R packages 
+  - `ggplot2` 很厉害的绘图包
+  - `rmarkdown` markdwon的R语言版，可以制作比较精美的报告，将代码和写作联系起来。本文就是利用rmarkdown完成的。
+  - `stringr` 文本，字符串处理
+  - `plyr` 整合，分割数据
+  - [相关推荐](https://www.zhihu.com/question/21792740)
+
+
+
